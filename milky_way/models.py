@@ -6,3 +6,4 @@ class Star(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='stars/', default='stars/default.png')
+    views_count = models.PositiveIntegerField(default = 0)
