@@ -6,12 +6,19 @@ from django.contrib.auth.models import User
 class StarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Star
-        fields = '__all__'
+        fields =['name', 'description', 'image']
+        read_only_fields = ['views_count']
 
 class StarSerializerOther(serializers.ModelSerializer):
     class Meta:
         model = Star
-        fields = ['id','name']
+        fields = ['id','name', 'image']
+
+class StarAll(serializers.ModelSerializer):
+    class Meta:
+        model = Star
+        fields = '__all__'
+        read_only_fields = ['views_count', 'user']
 
 class Seria(serializers.ModelSerializer):
     password = serializers.CharField(write_only = True, required = True, style = {'input_type':'password'})
@@ -19,7 +26,8 @@ class Seria(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'confirm_password']
+        fields = ['username', 'email', 'password', 'confirm_password', 'is_staff']
+        read_only_fields = ['is_staff']
 
     def validate(self, atribs):
         if atribs['password'] != atribs['confirm_password']:
